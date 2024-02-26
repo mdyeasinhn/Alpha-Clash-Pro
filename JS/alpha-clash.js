@@ -20,16 +20,19 @@ function handelerKeyboardButtonPress(event){
     if(playerPress  === expectedAlphabet){
         console.log('You get a point');
         //Update score
-        //.1 get the current score
-        const currentScoreElement = document.getElementById('current-score');
-        const currentScoreText = currentScoreElement.innerText;
-        const currentScore =parseInt(currentScoreText);
-        console.log(currentScore);
-        //.2 increase the current score
-        const newScore= currentScore + 1;
-
-        //.3 show the updated score
-        currentScoreElement.innerText = newScore;
+        const currentScore = getTextElementValueById('current-score');
+        const updatedScore = currentScore + 1;
+        setTextElementValueById('current-score', updatedScore);
+        //---------------------------- */
+        // //.1 get the current score
+        // const currentScoreElement = document.getElementById('current-score');
+        // const currentScoreText = currentScoreElement.innerText;
+        // const currentScore =parseInt(currentScoreText);
+        // console.log(currentScore);
+        // //.2 increase the current score
+        // const newScore= currentScore + 1;
+        // //.3 show the updated score
+        // currentScoreElement.innerText = newScore;
 
         //start a new round 
         removeBackgroundColorById(expectedAlphabet)
@@ -37,15 +40,23 @@ function handelerKeyboardButtonPress(event){
 
     }else{
         console.log('You missed.you loss a life');
+        const currentLife= getTextElementValueById('current-life');
+        const updatedLife= currentLife -1;
+        setTextElementValueById('current-life',updatedLife);
 
-        //step-1: get the current life number
-        const currentLifeElement = document.getElementById('current-life');
-        const currentLifeText=currentLifeElement.innerText;
-        const currentLife=parseInt(currentLifeText);
-        //step-2: reduce the current life number
-        const newLife=currentLife-1;
-        //step-3: display  update  the current life
-        currentLifeElement.innerText=newLife
+        if(updatedLife === 0){
+          gameOver();
+        }
+        
+        //----------------------------------------------------------------
+        // //step-1: get the current life number
+        // const currentLifeElement = document.getElementById('current-life');
+        // const currentLifeText=currentLifeElement.innerText;
+        // const currentLife=parseInt(currentLifeText);
+        // //step-2: reduce the current life number
+        // const newLife=currentLife-1;
+        // //step-3: display  update  the current life
+        // currentLifeElement.innerText=newLife;
     }
     // console.log(currentAlphabetElement.innerText)
     
@@ -67,8 +78,18 @@ function continueGame(){
 
 }
 function play(){
+    //hide everything show only playground
     hideElementById('home-screen');
+    hideElementById('final-score');
     showElementById('playground');
+
+    //reset score and life 
+    getTextElementValueById('current-life', 5);
+    setTextElementValueById('cure-score', 0);
     continueGame()
 
+}
+function gameOver() {
+    hideElementById('playground');
+    showElementById('final-score');
 }
