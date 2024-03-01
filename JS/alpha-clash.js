@@ -14,7 +14,10 @@ function handelerKeyboardButtonPress(event){
     const currentAlphabetElement =document.getElementById('current-alphabet');
     const currentAlphabet = currentAlphabetElement.innerText;
     const expectedAlphabet = currentAlphabet.toLowerCase();
-
+    
+    if(playerPress ==='Escape'){
+        gameOver();
+    }
 
     //check right or wrong key pressed
     if(playerPress  === expectedAlphabet){
@@ -85,11 +88,21 @@ function play(){
 
     //reset score and life 
     getTextElementValueById('current-life', 5);
-    setTextElementValueById('cure-score', 0);
+    const life =document.getElementById('current-life');
+    life.innerText= 5;
+    setTextElementValueById('current-score', 0);
     continueGame()
 
 }
 function gameOver() {
     hideElementById('playground');
     showElementById('final-score');
+    //Update the score
+    //1:get the final score
+    const lastScore =document.getElementById('current-score');
+    console.log(lastScore);
+    const lastScoreText=lastScore.innerText;
+    console.log(lastScoreText);
+    setTextElementValueById('last-score', lastScoreText);
+
 }
